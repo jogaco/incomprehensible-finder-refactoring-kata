@@ -1,106 +1,100 @@
 package test;
-import static org.junit.Assert.assertEquals;
+import algorithm.Result;
+import algorithm.Finder;
+import algorithm.Person;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import algorithm.F;
-import algorithm.FT;
-import algorithm.Finder;
-import algorithm.Thing;
+import static org.junit.Assert.assertEquals;
 
 public class FinderTests {
 
-	Thing sue = new Thing();
-	Thing greg = new Thing();
-	Thing sarah = new Thing();
-	Thing mike = new Thing();
+	private Person sue;
+	private Person greg;
+	private Person sarah;
+	private Person mike;
 
 	@Before
 	public void setup() {
-		sue.name = "Sue";
-		sue.birthDate = new Date(50, 0, 1);
-		greg.name = "Greg";
-		greg.birthDate = new Date(52, 5, 1);
-		sarah.name = "Sarah";
-		sarah.birthDate = new Date(82, 0, 1);
-		mike.name = "Mike";
-		mike.birthDate = new Date(79, 0, 1);
+		sue = new Person("Sue", new Date(50, 0, 1));
+		greg = new Person("Greg", new Date(52, 5, 1));
+		sarah = new Person("Sarah",  new Date(82, 0, 1));
+		mike = new Person("Mike",  new Date(79, 0, 1));
 	}
 
 	@Test
 	public void Returns_Empty_Results_When_Given_Empty_List() {
-		List<Thing> list = new ArrayList<Thing>();
+		List<Person> list = new ArrayList<>();
 		Finder finder = new Finder(list);
 
-		F result = finder.Find(FT.One);
-		assertEquals(null, result.P1);
+		Result result = finder.FindClosest();
+		assertEquals(null, result.person1);
 
-		assertEquals(null, result.P2);
+		assertEquals(null, result.person2);
 	}
 
 	@Test
 	public void Returns_Empty_Results_When_Given_One_Person() {
-		List<Thing> list = new ArrayList<Thing>();
+		List<Person> list = new ArrayList<>();
 		list.add(sue);
 
 		Finder finder = new Finder(list);
 
-		F result = finder.Find(FT.One);
+		Result result = finder.FindClosest();
 
-		assertEquals(null, result.P1);
-		assertEquals(null, result.P2);
+		assertEquals(null, result.person1);
+		assertEquals(null, result.person2);
 	}
 
 	@Test
 	public void Returns_Closest_Two_For_Two_People() {
-		List<Thing> list = new ArrayList<Thing>();
+		List<Person> list = new ArrayList<>();
 		list.add(sue);
 		list.add(greg);
 		Finder finder = new Finder(list);
 
-		F result = finder.Find(FT.One);
+		Result result = finder.FindClosest();
 
-		assertEquals(sue, result.P1);
-		assertEquals(greg, result.P2);
+		assertEquals(sue, result.person1);
+		assertEquals(greg, result.person2);
 	}
 
 	@Test
 	public void Returns_Furthest_Two_For_Two_People() {
-		List<Thing> list = new ArrayList<Thing>();
+		List<Person> list = new ArrayList<>();
 		list.add(mike);
 		list.add(greg);
 
 		Finder finder = new Finder(list);
 
-		F result = finder.Find(FT.Two);
+		Result result = finder.FindFurthest();
 
-		assertEquals(greg, result.P1);
-		assertEquals(mike, result.P2);
+		assertEquals(greg, result.person1);
+		assertEquals(mike, result.person2);
 	}
 
 	@Test
 	public void Returns_Furthest_Two_For_Four_People() {
-		List<Thing> list = new ArrayList<Thing>();
+		List<Person> list = new ArrayList<>();
 		list.add(sue);
 		list.add(sarah);
 		list.add(mike);
 		list.add(greg);
 		Finder finder = new Finder(list);
 
-		F result = finder.Find(FT.Two);
+		Result result = finder.FindFurthest();
 
-		assertEquals(sue, result.P1);
-		assertEquals(sarah, result.P2);
+		assertEquals(sue, result.person1);
+		assertEquals(sarah, result.person2);
 	}
 
 	@Test
 	public void Returns_Closest_Two_For_Four_People() {
-		List<Thing> list = new ArrayList<Thing>();
+		List<Person> list = new ArrayList<>();
 		list.add(sue);
 		list.add(sarah);
 		list.add(mike);
@@ -108,10 +102,10 @@ public class FinderTests {
 
 		Finder finder = new Finder(list);
 
-		F result = finder.Find(FT.One);
+		Result result = finder.FindClosest();
 
-		assertEquals(sue, result.P1);
-		assertEquals(greg, result.P2);
+		assertEquals(sue, result.person1);
+		assertEquals(greg, result.person2);
 	}
 
 }
