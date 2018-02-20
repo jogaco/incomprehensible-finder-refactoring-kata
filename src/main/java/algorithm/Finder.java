@@ -44,7 +44,7 @@ public class Finder {
 		for (int i = 0; i < personList.size() - 1; i++) {
 			for (int j = i + 1; j < personList.size(); j++) {
 				Result result = new Result();
-				if (personList.get(i).getBirthDate().getTime() < personList.get(j).getBirthDate().getTime()) {
+				if (personList.get(i).compareTo(personList.get(j)) < 0) {
 					result.person1 = personList.get(i);
 					result.person2 = personList.get(j);
 				} else {
