@@ -32,9 +32,9 @@ public class FinderTests {
 		Finder finder = new Finder(list);
 
 		Result result = finder.FindClosest();
-		assertEquals(null, result.person1);
+		assertEquals(null, result.getMin());
 
-		assertEquals(null, result.person2);
+		assertEquals(null, result.getMax());
 	}
 
 	@Test
@@ -46,8 +46,8 @@ public class FinderTests {
 
 		Result result = finder.FindClosest();
 
-		assertEquals(null, result.person1);
-		assertEquals(null, result.person2);
+		assertEquals(null, result.getMin());
+		assertEquals(null, result.getMax());
 	}
 
 	@Test
@@ -59,8 +59,8 @@ public class FinderTests {
 
 		Result result = finder.FindClosest();
 
-		assertEquals(sue, result.person1);
-		assertEquals(greg, result.person2);
+		assertEquals(sue, result.getMin());
+		assertEquals(greg, result.getMax());
 	}
 
 	@Test
@@ -73,8 +73,8 @@ public class FinderTests {
 
 		Result result = finder.FindFurthest();
 
-		assertEquals(greg, result.person1);
-		assertEquals(mike, result.person2);
+		assertEquals(greg, result.getMin());
+		assertEquals(mike, result.getMax());
 	}
 
 	@Test
@@ -88,8 +88,8 @@ public class FinderTests {
 
 		Result result = finder.FindFurthest();
 
-		assertEquals(sue, result.person1);
-		assertEquals(sarah, result.person2);
+		assertEquals(sue, result.getMin());
+		assertEquals(sarah, result.getMax());
 	}
 
 	@Test
@@ -104,8 +104,8 @@ public class FinderTests {
 
 		Result result = finder.FindClosest();
 
-		assertEquals(sue, result.person1);
-		assertEquals(greg, result.person2);
+		assertEquals(sue, result.getMin());
+		assertEquals(greg, result.getMax());
 	}
 
 }
