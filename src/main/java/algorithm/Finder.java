@@ -1,60 +1,54 @@
 package algorithm;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Finder {
 	private final List<Person> personList;
-	private final Comparator<Result> CLOSEST = (r1, r2) -> (int)(r1.distance - r2.distance < 0 ? -1 : (r1.distance - r2.distance > 0 ? 1 : 0));
-	private final Comparator<Result> FURTHEST = (r1, r2) -> (int)(r1.distance - r2.distance < 0 ? 1 : (r1.distance - r2.distance > 0 ? -1 : 0));
+	private Result closest;
+	private Result furthest;
 
 	public Finder(List<Person> p) {
 		personList = p;
+
+		sort();
+		findClosest();
+		findFurthest();
 	}
 
 	public Result FindClosest() {
-		return findGeneric(CLOSEST);
+		return closest;
 	}
 	public Result FindFurthest() {
-		return findGeneric(FURTHEST);
+		return furthest;
 	}
 
-	private Result findGeneric(Comparator<Result> comparator) {
-		List<Result> candidateList = precalculateAgeDistance();
-
-		if (candidateList.size() < 1) {
-			return new Result();
-		}
-
-		Result answer = candidateList.get(0);
-
-		for (Result candidate : candidateList) {
-			if (comparator.compare(candidate, answer) < 0) {
-				answer = candidate;
-			}
-		}
-		return answer;
+	private void sort() {
+		Collections.sort(personList);
 	}
 
+	private void findFurthest() {
+		if (personList.size() > 1) {
+			furthest = new Result();
+			furthest.person1 = personList.get(0);
+			furthest.person2 = personList.get(personList.size() - 1);
+			furthest.distance = furthest.person2.getBirthDate().getTime() - furthest.person1.getBirthDate().getTime();
+		} else {
+			furthest = new Result();
+		}
+	}
 
-	private List<Result> precalculateAgeDistance() {
-		List<Result> candidateList = new ArrayList<>();
-
-		for (int i = 0; i < personList.size() - 1; i++) {
-			for (int j = i + 1; j < personList.size(); j++) {
-				Result result = new Result();
-				if (personList.get(i).compareTo(personList.get(j)) < 0) {
-					result.person1 = personList.get(i);
-					result.person2 = personList.get(j);
-				} else {
-					result.person1 = personList.get(j);
-					result.person2 = personList.get(i);
-				}
-				result.distance = result.person2.getBirthDate().getTime() - result.person1.getBirthDate().getTime();
-				candidateList.add(result);
+	private void findClosest() {
+		closest = new Result();
+		closest.distance = Long.MAX_VALUE;
+		for (int i = 0; i < personList.size() - 1; ++i) {
+			Person person1 = personList.get(i);
+			Person person2 = personList.get(i + 1);
+			long distance = person2.getBirthDate().getTime() - person1.getBirthDate().getTime();
+			if (distance < closest.distance) {
+				closest.distance = distance;
+				closest.person1 = person1;
+				closest.person2 = person2;
 			}
 		}
-		return candidateList;
 	}
 }
