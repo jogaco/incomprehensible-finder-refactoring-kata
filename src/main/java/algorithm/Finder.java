@@ -42,7 +42,8 @@ public class Finder {
 		for (int i = 0; i < personList.size() - 1; ++i) {
 			Person person1 = personList.get(i);
 			Person person2 = personList.get(i + 1);
-			long distance = person2.getBirthDate().getTime() - person1.getBirthDate().getTime();
+			long distance = person1.distance(person2);
+
 			if (distance < minDistance) {
 				minDistance = distance;
 				minIndex = i;

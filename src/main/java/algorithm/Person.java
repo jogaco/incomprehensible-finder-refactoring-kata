@@ -32,5 +32,10 @@ public class Person implements Comparable<Person> {
 			return getBirthDate().compareTo(other.getBirthDate());
 		}
 	}
+
+	public long distance(Person greater) {
+		assert(greater.getBirthDate().getTime() > getBirthDate().getTime());
+		return greater.getBirthDate().getTime() - getBirthDate().getTime();
+	}
 }
 

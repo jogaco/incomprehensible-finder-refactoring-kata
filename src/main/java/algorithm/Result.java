@@ -11,7 +11,7 @@ public class Result {
 	public Result(Person min, Person max) {
 		this.min = min;
 		this.max = max;
-		distance = max.getBirthDate().getTime() - min.getBirthDate().getTime();
+		distance = min.distance(max);
 	}
 
 	public Person getMin() {
